@@ -53,6 +53,7 @@ public class ClientHandler implements Runnable {
     }
 
 
+
     public void disconnectStreams() {
         try {
             input.close();
@@ -67,11 +68,13 @@ public class ClientHandler implements Runnable {
 
         writeMessage("Choose your user name please.");
         this.clientName = readMessage();
-        writeMessage("Welcome " + this.clientName + "! Enjoy our chat.");
+        writeMessage("Welcome " + this.clientName + " :) Enjoy the chat!");
+
+        this.server.informConnection(this.clientName);
 
         while (clientSocket.isConnected()) {
             String clientMessage = readMessage();
-            server.dispatch(this.clientSocket, clientMessage);
+            server.dispatch(this.clientSocket, this, clientMessage);
         }
 
     }

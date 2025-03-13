@@ -50,24 +50,30 @@ public class Server {
 
     }
 
-    public void dispatch(Socket clientSocket, String clientMessage) {
+    public void dispatch(Socket clientSocket, ClientHandler clientHandler, String clientMessage) {
 
-        if (clientMessage.equals("/quit")) {
-            close(clientSocket);
+        String[] separatedMessage = null;
 
-        } else if (clientMessage.equals("/list")) {
-            showList(clientSocket);
-
+        if (clientMessage.charAt(0) == '/') {
+            separatedMessage = clientMessage.split("--");
         } else {
-            broadcast(clientSocket, clientMessage);
+            broadcast(clientSocket, clientHandler.getClientName(), clientMessage);
+        }
+
+        if (separatedMessage[0].equals("/quit")) {
+            close(clientSocket, clientHandler.getClientName());
+        } else if (separatedMessage[0].equals("/list")) {
+            showList(clientSocket);
+        } else if (separatedMessage[0].equals("/whisper")) {
+            whisper(clientHandler.getClientName(), separatedMessage[1], separatedMessage[2]);
         }
 
     }
 
-    public void broadcast(Socket clientSocket, String clientMessage) {
-        for (ClientHandler clientHandler : clientHandlers) {
-            if (clientHandler.getClientSocket() != clientSocket) {
-                clientHandler.writeMessage(clientMessage);
+    public void broadcast(Socket clientSocket, String clientName, String clientMessage) {
+        for (ClientHandler recipient : clientHandlers) {
+            if (recipient.getClientSocket() != clientSocket) {
+                recipient.writeMessage(clientName + ": " + clientMessage);
             }
         }
     }
@@ -82,7 +88,7 @@ public class Server {
             }
         }
 
-        currentClientHandle.writeMessage("These are the current users:");
+        currentClientHandle.writeMessage("Users list:");
 
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler != currentClientHandle) {
@@ -92,15 +98,28 @@ public class Server {
 
     }
 
-    private void close(Socket clientSocket) {
+    public void whisper(String senderName, String recipientName, String message) {
+
+        for (ClientHandler clientHandler : clientHandlers) {
+            if (clientHandler.getClientName().equals(recipientName)) {
+                clientHandler.writeMessage(senderName + " whispered to you: " + message);
+            }
+        }
+
+    }
+
+
+    public void close(Socket clientSocket, String clientName) {
 
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.getClientSocket() == clientSocket) {
                 clientHandler.writeMessage("You was disconnected.");
                 clientHandler.disconnectStreams();
                 clientHandlers.remove(clientHandler);
+                informDisconnection(clientName);
             }
         }
+
 
         try {
             logger.log(Level.INFO, "closing client socket for " + getAddress(clientSocket));
@@ -111,7 +130,23 @@ public class Server {
 
     }
 
-    private String getAddress(ServerSocket socket) {
+    public void informDisconnection(String clientName) {
+        for (ClientHandler clientHandler : clientHandlers) {
+            clientHandler.writeMessage(clientName + " disconnected from chat :(");
+        }
+    }
+
+    public void informConnection(String clientName) {
+
+        for (ClientHandler clientHandler : clientHandlers) {
+            if (!clientHandler.getClientName().equals(clientName)) {
+                clientHandler.writeMessage(clientName + " connected to the chat!");
+            }
+        }
+
+    }
+
+    public String getAddress(ServerSocket socket) {
 
         if (socket == null) {
             return null;
@@ -120,7 +155,7 @@ public class Server {
         return socket.getInetAddress().getHostAddress() + ":" + socket.getLocalPort();
     }
 
-    private String getAddress(Socket socket) {
+    public String getAddress(Socket socket) {
         return socket.getInetAddress().getHostAddress() + ":" + socket.getLocalPort();
     }
 
