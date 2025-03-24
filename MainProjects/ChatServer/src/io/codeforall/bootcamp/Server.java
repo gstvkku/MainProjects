@@ -51,7 +51,7 @@ public class Server {
     }
 
     public void dispatch(Socket clientSocket, ClientHandler clientHandler, String clientMessage) {
-
+        System.out.println(3);
         String[] separatedMessage = null;
 
         if (clientMessage.charAt(0) == '/') {
@@ -59,7 +59,7 @@ public class Server {
         } else {
             broadcast(clientSocket, clientHandler.getClientName(), clientMessage);
         }
-
+        System.out.println(4);
         if (separatedMessage[0].equals("/quit")) {
             close(clientSocket, clientHandler.getClientName());
         } else if (separatedMessage[0].equals("/list")) {
@@ -67,7 +67,7 @@ public class Server {
         } else if (separatedMessage[0].equals("/whisper")) {
             whisper(clientHandler.getClientName(), separatedMessage[1], separatedMessage[2]);
         }
-
+        System.out.println(5);
     }
 
     public void broadcast(Socket clientSocket, String clientName, String clientMessage) {
@@ -100,9 +100,9 @@ public class Server {
 
     public void whisper(String senderName, String recipientName, String message) {
 
-        for (ClientHandler clientHandler : clientHandlers) {
-            if (clientHandler.getClientName().equals(recipientName)) {
-                clientHandler.writeMessage(senderName + " whispered to you: " + message);
+        for (ClientHandler recipient : clientHandlers) {
+            if (recipient.getClientName().equals(recipientName)) {
+                recipient.writeMessage(senderName + " whispered to you: " + message);
             }
         }
 

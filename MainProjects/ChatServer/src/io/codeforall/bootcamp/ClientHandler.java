@@ -74,7 +74,9 @@ public class ClientHandler implements Runnable {
 
         while (clientSocket.isConnected()) {
             String clientMessage = readMessage();
+            System.out.println(1);
             server.dispatch(this.clientSocket, this, clientMessage);
+            System.out.println(2);
         }
 
     }
