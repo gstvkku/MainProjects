@@ -1,0 +1,597 @@
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000000;
+  overflow: scroll;
+  font-family: "Red Hat Display", sans-serif;
+}
+
+header {
+  padding: 15px 2%;
+  height: 100px;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  overflow: hidden;
+  border-bottom: 1px solid rgb(55, 55, 55);
+  background-color: #101010;
+}
+
+.logo {
+  width: 225px;
+  height: 70px;
+  margin-bottom: 3px;
+}
+
+header > .interface {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 140px;
+  padding: 0px 5px;
+}
+
+header a {
+  color: #6a6969;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-block;
+  transition: 0.5s;
+}
+header a:hover {
+  color: #ffffff;
+  transform: scale(1.05);
+}
+header nav ul {
+  list-style-type: none;
+}
+header nav ul li {
+  display: inline-block;
+  padding: 0 25px;
+}
+
+@keyframes backgroundGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.generate-button {
+  padding: 10px 25px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgb(173, 12, 190);
+  color: white;
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 2s;
+}
+
+.generate-button:hover {
+  transform: scale(1.05);
+  animation: backgroundGradient 3s infinite alternate;
+  background: linear-gradient(
+    -45deg,
+    #5b058c,
+    rgb(157, 9, 174),
+    #5b058c,
+    rgb(171, 6, 189)
+  );
+  background-size: 400% 400%;
+}
+
+section.welcome {
+  margin-top: 6px;
+  font-size: 25px;
+  text-align: center;
+  position: relative;
+}
+
+section.welcome .flex {
+  position: relative;
+  width: 100%;
+  margin-top: 50px;
+  height: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+  background: rgba(20, 20, 20, 0.517);
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* CIRCLES */
+.circle1,
+.circle2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  mix-blend-mode: screen;
+  animation-timing-function: linear;
+  overflow: visible;
+}
+.circle1 .pulse,
+.circle2 .pulse {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgb(186, 7, 206) 0%,
+    transparent 80%
+  );
+  filter: blur(100px);
+  animation: pulseEffect 4.5s ease-in-out infinite alternate;
+}
+
+.circle2 .pulse {
+  background: radial-gradient(
+    circle at center,
+    rgb(97, 3, 173) 0%,
+    transparent 115%
+  );
+}
+
+.circle1 {
+  top: 12%;
+  left: 0%;
+  animation: moveInvert1 10s linear infinite;
+}
+.circle2 {
+  top: 17%;
+  right: 0%;
+  animation: moveInvert2 10s linear infinite;
+}
+
+@keyframes moveInvert1 {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(30vw, 16vw);
+  }
+  50% {
+    transform: translate(80vw, 3vw);
+  }
+  75% {
+    transform: translate(30vw, -16vw);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes moveInvert2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-30vw, -16vw);
+  }
+  50% {
+    transform: translate(-80vw, -3vw);
+  }
+  75% {
+    transform: translate(-30vw, 16vw);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes pulseEffect {
+  0% {
+    transform: scale(0.95);
+    filter: blur(90px);
+  }
+  25% {
+    transform: scale(1.15);
+    filter: blur(130px);
+  }
+  50% {
+    transform: scale(0.95);
+    filter: blur(90px);
+  }
+  75% {
+    transform: scale(1.15);
+    filter: blur(130px);
+  }
+  100% {
+    transform: scale(0.95);
+    filter: blur(90px);
+  }
+}
+section.welcome h1 {
+  font-size: 60px;
+  font-weight: bold;
+  color: #fff;
+  z-index: 2;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+section.welcome p {
+  color: white;
+  font-size: 22px;
+  padding: 0px 150px;
+}
+
+section.welcome button {
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: rgb(173, 12, 190);
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  margin-top: 40px;
+  transition: 2s;
+}
+
+section.about {
+  padding: 100px 10%;
+  padding-bottom: 10px;
+  text-align: center;
+  color: white;
+  height: 600px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+section.about .flex {
+  max-width: 1300px;
+  height: 70%;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  padding: 50px;
+  background-color: #101010;
+  border-radius: 30px;
+}
+section.about h2 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+section.about p {
+  font-size: 18px;
+  margin: 30px;
+}
+
+section.about .icon img {
+  width: 280px;
+  height: 300px;
+  position: relative;
+  animation-name: floating;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+section.about .txt {
+  width: 70%;
+  padding: 0px 30px;
+}
+
+section.about .icon {
+  width: 30%;
+}
+
+@keyframes floating {
+  0% {
+    top: -10px;
+  }
+  100% {
+    top: 10px;
+  }
+}
+
+section.login-register {
+  padding: 100px 10%;
+  padding-bottom: 10px;
+  text-align: center;
+  color: white;
+  height: 600px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+section.login-register .flex {
+  width: 80%;
+  height: 70%;
+  justify-self: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 50px;
+  background-color: #000000;
+  border-radius: 30px;
+  gap: 40px;
+}
+
+section.login-register .content {
+  display: flex;
+  position: relative;
+  width: 450px;
+  height: 450px;
+  background: repeating-conic-gradient(
+    from var(--a),
+    rgb(173, 12, 190) 0%,
+    rgb(173, 12, 190) 5%,
+    transparent 5%,
+    transparent 40%,
+    rgb(173, 12, 190) 50%
+  );
+  animation: animateBorders 4s linear infinite;
+  border-radius: 30px;
+}
+
+section.login-register .content::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(
+    from var(--a),
+    rgb(59, 5, 140) 0%,
+    rgb(59, 5, 140) 5%,
+    transparent 5%,
+    transparent 40%,
+    rgb(59, 5, 140) 50%
+  );
+  animation: animateBorders 4s linear infinite;
+  animation-delay: -1s;
+  border-radius: 30px;
+}
+
+@keyframes animateBorders {
+  0% {
+    --a: 0deg;
+  }
+  100% {
+    --a: 360deg;
+  }
+}
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+section.login-register .content::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background-color: #000000;
+  border-radius: 30px;
+  border: 0px solid #000000;
+}
+
+section.login-register h2 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-decoration: underline;
+}
+
+.login-register p {
+  margin-top: 15px;
+}
+
+.login-form form {
+  margin-bottom: 28px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.login-register button {
+  margin-top: 20px;
+  align-self: center;
+  padding: 8px 25px;
+  width: 40%;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgb(173, 12, 190);
+  color: white;
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 2s;
+}
+
+.login-register button:hover {
+  transform: scale(1.05);
+  animation: backgroundGradient 3s infinite alternate;
+  background: linear-gradient(
+    -45deg,
+    #5b058c,
+    rgb(157, 9, 174),
+    #5b058c,
+    rgb(171, 6, 189)
+  );
+  background-size: 400% 400%;
+}
+
+form input,
+textarea {
+  width: 100%;
+  padding: 10px 10px;
+  background-color: rgba(88, 83, 83, 0.392);
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 14px;
+}
+
+section.login-register .login-form {
+  background-color: #101010;
+  width: 40%;
+  height: 80%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 30px;
+  gap: 30px;
+  z-index: 50;
+}
+
+section.login-register .register-form {
+  background-color: #101010;
+  width: 40%;
+  height: 80%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 30px;
+}
+
+section.contact {
+  padding: 100px 10%;
+  padding-bottom: 10px;
+  text-align: center;
+  color: white;
+  height: 600px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+section.contact .flex {
+  width: 80%;
+  height: 40%;
+  justify-self: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px 70px;
+  background-color: #101010;
+  border-radius: 30px;
+  gap: 40px;
+}
+
+textarea {
+  resize: none;
+  height: 80spx;
+}
+
+section.contact .contact-form {
+  width: 45%;
+  border-radius: 30px;
+}
+
+section.contact h2 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  text-decoration: underline;
+}
+
+.contact button {
+  margin-top: 20px;
+  align-self: center;
+  padding: 10px 25px;
+  width: 50%;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgb(173, 12, 190);
+  color: white;
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 2s;
+}
+
+.contact button:hover {
+  transform: scale(1.05);
+  animation: backgroundGradient 3s infinite alternate;
+  background: linear-gradient(
+    -45deg,
+    #5b058c,
+    rgb(157, 9, 174),
+    #5b058c,
+    rgb(171, 6, 189)
+  );
+  background-size: 400% 400%;
+}
+
+section.contact .decoration {
+}
+
+footer {
+  margin-top: 40px;
+  padding: 5px 4%;
+  background-size: 400% 400%;
+  color: white;
+}
+footer > .interface {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 120px;
+  padding: 15px 0px;
+  gap: 40px;
+}
+footer .footer-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  gap: 10px;
+}
+footer .footer-text p {
+  font-size: 14px;
+  color: rgb(54, 54, 54);
+}
+footer .conect-icons {
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  z-index: 5;
+  gap: 15px;
+}
+
+footer a {
+  padding: 10px 10spx;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+footer a:hover {
+  transform: scale(1.1);
+}
+
+.circle-img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border: 1px solid white;
+  border-radius: 50%;
+}
