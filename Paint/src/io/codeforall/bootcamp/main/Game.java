@@ -29,7 +29,7 @@ public class Game implements KeyboardHandler {
     }
 
     public void saveDraw() throws IOException {
-        File file = new File("/Users/codecadet/Documents/My-Projects/Paint/saved/saved.txt");
+        File file = new File("/Users/gustavocacau/Documents/MainProjects/Paint/saved/saved.txt");
         FileWriter fileW = new FileWriter(file);
         BufferedWriter buffW = new BufferedWriter(fileW);
         buffW.write(this.grid.gridStatus());
@@ -38,7 +38,7 @@ public class Game implements KeyboardHandler {
 
     public void loadLastDraw() throws IOException {
         char[] savedGridPosition = new char[this.grid.gridStatus().length()];
-        FileReader fileR = new FileReader("/Users/codecadet/Documents/My-Projects/Paint/saved/saved.txt");
+        FileReader fileR = new FileReader("/Users/gustavocacau/Documents/MainProjects/Paint/saved/saved.txt");
         BufferedReader buffW = new BufferedReader(fileR);
         buffW.read(savedGridPosition);
         for (int i = 0; i < savedGridPosition.length; i++) {
