@@ -15,6 +15,6 @@ public class UserEventProducer {
     }
 
     public void publishUserRegistered(UserRegisteredEvent event) {
-        kafkaTemplate.send("user-registered", event);
+        kafkaTemplate.send("user-events", event);
     }
 }
