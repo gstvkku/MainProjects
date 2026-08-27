@@ -15,7 +15,7 @@ public class AIIdeaController {
 
     private final AIIdeaService aiIdeaService;
 
-    @PostMapping("/generate/idea")
+    @PostMapping("/generate-idea")
     public ResponseEntity<AIIdeaResponse> generateIdea(
             @Valid @RequestBody AIIdeaRequest request
     ) {
