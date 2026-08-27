@@ -17,20 +17,19 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/ideas")
+@RequestMapping("/idea")
 @RequiredArgsConstructor
 public class IdeaController {
 
     private final IdeaService ideaService;
 
-    @GetMapping("/{id}")
-    public IdeaResponse findById(
-            @PathVariable UUID id,
+    @GetMapping
+    public List<IdeaResponse> findAll(
             Authentication authentication
     ) {
         UUID userId = getUserId(authentication);
 
-        return ideaService.findById(id, userId);
+        return ideaService.findAll(userId);
     }
 
     @PostMapping

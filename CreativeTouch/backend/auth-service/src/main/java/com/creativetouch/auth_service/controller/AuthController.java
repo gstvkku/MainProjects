@@ -7,6 +7,7 @@ import com.creativetouch.auth_service.dto.response.LoginResponse;
 import com.creativetouch.auth_service.dto.response.RegisterResponse;
 import com.creativetouch.auth_service.model.User;
 import com.creativetouch.auth_service.repository.UserRespository;
+import com.creativetouch.auth_service.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,27 +26,48 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserRespository userRespository;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenConfig tokenConfig;
+    private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        UsernamePasswordAuthenticationToken mailAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.password());
-        Authentication authentication = authenticationManager.authenticate(mailAndPass);
+    public ResponseEntity<LoginResponse> login(
+            @Valid @RequestBody LoginRequest request
+    ) {
+        UsernamePasswordAuthenticationToken mailAndPass =
+                new UsernamePasswordAuthenticationToken(
+                        request.email(),
+                        request.password()
+                );
+
+        Authentication authentication =
+                authenticationManager.authenticate(mailAndPass);
+
         User user = (User) authentication.getPrincipal();
+
         String token = tokenConfig.generateToken(user);
+
         return ResponseEntity.ok(new LoginResponse(token));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> register (@Valid @RequestBody RegisterRequest request) {
-        User newUser = new User();
-        newUser.setName(request.name());
-        newUser.setEmail(request.email());
-        newUser.setPassword(passwordEncoder.encode(request.password()));
-        userRespository.save(newUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new RegisterResponse(newUser.getName(), newUser.getEmail()));
+    public ResponseEntity<RegisterResponse> register(
+            @Valid @RequestBody RegisterRequest request
+    ) {
+
+        User newUser = authService.register(
+                request.name(),
+                request.email(),
+                request.password()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(
+                        new RegisterResponse(
+                                newUser.getName(),
+                                newUser.getEmail()
+                        )
+                );
     }
 }
